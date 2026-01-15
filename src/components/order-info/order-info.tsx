@@ -11,9 +11,7 @@ export const OrderInfo: FC = () => {
   const { number } = useParams<{ number: string }>();
 
   const orders = useSelector((state) => state.feed.orders);
-  const ingredients = useSelector(
-    (state) => state.ingredients.ingredients
-  );
+  const ingredients = useSelector((state) => state.ingredients.ingredients);
 
   const orderData = useMemo(() => {
     if (!orders.length || !number) return null;

@@ -59,10 +59,7 @@ const App = () => {
 
             <Route path='/feed/*' element={<FeedPage />} />
 
-            <Route
-              path='/ingredients/:id'
-              element={<IngredientDetails />}
-            />
+            <Route path='/ingredients/:id' element={<IngredientDetails />} />
 
             <Route
               path='/login'
@@ -74,11 +71,15 @@ const App = () => {
             />
             <Route
               path='/forgot-password'
-              element={<ProtectedRoute onlyUnAuth component={<ForgotPassword />} />}
+              element={
+                <ProtectedRoute onlyUnAuth component={<ForgotPassword />} />
+              }
             />
             <Route
               path='/reset-password'
-              element={<ProtectedRoute onlyUnAuth component={<ResetPassword />} />}
+              element={
+                <ProtectedRoute onlyUnAuth component={<ResetPassword />} />
+              }
             />
 
             <Route

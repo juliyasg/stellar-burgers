@@ -4,10 +4,7 @@ import { useSelector } from '../../services/store';
 import { TOrder } from '@utils-types';
 import { FeedInfoUI } from '../ui/feed-info';
 
-const getOrdersByStatus = (
-  orders: TOrder[],
-  statuses: string[]
-): number[] =>
+const getOrdersByStatus = (orders: TOrder[], statuses: string[]): number[] =>
   orders
     .filter((order) => statuses.includes(order.status))
     .map((order) => order.number)

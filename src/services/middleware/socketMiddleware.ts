@@ -10,12 +10,9 @@ type TWsActions = {
   wsMessage: (payload: any) => { type: string; payload: any };
 };
 
-export const socketMiddleware = (
-  wsUrl: string,
-  actions: TWsActions,
-  withAuth = false
-): Middleware => {
-  return (store) => {
+export const socketMiddleware =
+  (wsUrl: string, actions: TWsActions, withAuth = false): Middleware =>
+  (store) => {
     let socket: WebSocket | null = null;
 
     return (next) => (action: any) => {
@@ -24,10 +21,7 @@ export const socketMiddleware = (
       if (action.type === actions.wsConnect().type) {
         const token = getCookie('accessToken')?.replace('Bearer ', '');
 
-        const url =
-          withAuth && token
-            ? `${wsUrl}?token=${token}`
-            : wsUrl;
+        const url = withAuth && token ? `${wsUrl}?token=${token}` : wsUrl;
 
         socket = new WebSocket(url);
       }
@@ -59,4 +53,3 @@ export const socketMiddleware = (
       return next(action);
     };
   };
-};

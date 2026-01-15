@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, FC } from 'react';
+import { useState, useRef, useEffect, FC, useMemo } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { useSelector } from '../../services/store';
@@ -7,16 +7,27 @@ import { BurgerIngredientsUI } from '../ui/burger-ingredients';
 
 export const BurgerIngredients: FC = () => {
   const { ingredients } = useSelector((state) => state.ingredients);
+  const { bun, ingredients: constructorIngredients } = useSelector(
+    (state) => state.burgerConstructor
+  );
 
-  const buns = ingredients.filter(
-    (item: TIngredient) => item.type === 'bun'
-  );
-  const mains = ingredients.filter(
-    (item: TIngredient) => item.type === 'main'
-  );
-  const sauces = ingredients.filter(
-    (item: TIngredient) => item.type === 'sauce'
-  );
+  const buns = ingredients.filter((item) => item.type === 'bun');
+  const mains = ingredients.filter((item) => item.type === 'main');
+  const sauces = ingredients.filter((item) => item.type === 'sauce');
+
+  const ingredientsCounters = useMemo(() => {
+    const counters: Record<string, number> = {};
+
+    constructorIngredients.forEach((item) => {
+      counters[item._id] = (counters[item._id] || 0) + 1;
+    });
+
+    if (bun) {
+      counters[bun._id] = 2;
+    }
+
+    return counters;
+  }, [constructorIngredients, bun]);
 
   const [currentTab, setCurrentTab] = useState<TTabMode>('bun');
 
@@ -65,6 +76,7 @@ export const BurgerIngredients: FC = () => {
       mainsRef={mainsRef}
       saucesRef={saucesRef}
       onTabClick={onTabClick}
+      ingredientsCounters={ingredientsCounters}
     />
   );
 };

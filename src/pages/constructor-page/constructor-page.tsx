@@ -11,9 +11,7 @@ import { Preloader } from '../../components/ui';
 export const ConstructorPage: FC = () => {
   const dispatch = useDispatch();
 
-  const { ingredients, isLoading } = useSelector(
-    (state) => state.ingredients
-  );
+  const { ingredients, isLoading } = useSelector((state) => state.ingredients);
 
   useEffect(() => {
     dispatch(fetchIngredients());

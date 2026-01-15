@@ -26,7 +26,15 @@ const initialState: TUserState = {
 // регистрация
 export const registerUser = createAsyncThunk(
   'user/register',
-  async ({ email, password, name }: { email: string; password: string; name: string }) => {
+  async ({
+    email,
+    password,
+    name
+  }: {
+    email: string;
+    password: string;
+    name: string;
+  }) => {
     const data = await registerUserApi({ email, password, name });
 
     setCookie('accessToken', data.accessToken);
@@ -65,7 +73,15 @@ export const checkUserAuth = createAsyncThunk('user/checkAuth', async () => {
 // обновление профиля
 export const updateUser = createAsyncThunk(
   'user/update',
-  async ({ name, email, password }: { name: string; email: string; password?: string }) => {
+  async ({
+    name,
+    email,
+    password
+  }: {
+    name: string;
+    email: string;
+    password?: string;
+  }) => {
     const data = await updateUserApi({ name, email, password });
     return data.user;
   }
