@@ -11,18 +11,18 @@ import { ProfileOrdersUI } from '@ui-pages';
 export const ProfileOrders: FC = () => {
   const dispatch = useDispatch();
 
+  const user = useSelector((state) => state.user.user);
   const orders = useSelector((state) => state.profileOrders.orders ?? []);
-  const isAuthChecked = useSelector((state) => state.user.isAuthChecked);
 
   useEffect(() => {
-    if (!isAuthChecked) return;
+    if (!user) return;
 
     dispatch(wsConnect());
 
     return () => {
       dispatch(wsDisconnect());
     };
-  }, [dispatch, isAuthChecked]);
+  }, [dispatch, user]);
 
   return <ProfileOrdersUI orders={orders} />;
 };
