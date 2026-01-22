@@ -1,6 +1,12 @@
 import reducer, { createOrder, clearOrder } from '../orderSlice';
 import { TOrder } from '@utils-types';
 
+type TOrderState = {
+  order: TOrder | null;
+  orderRequest: boolean;
+  orderFailed: boolean;
+};
+
 const order: TOrder = {
   _id: 'id',
   status: 'done',
@@ -12,12 +18,12 @@ const order: TOrder = {
 };
 
 describe('orderSlice', () => {
-  it('pending ставит orderRequest = true', () => {
+  it('pending: orderRequest=true', () => {
     const state = reducer(undefined, createOrder.pending('', []));
     expect(state.orderRequest).toBe(true);
   });
 
-  it('fulfilled ставит orderRequest=false и записывает order', () => {
+  it('fulfilled: записывает order', () => {
     const payload = {
       success: true,
       name: 'Test order',
@@ -33,16 +39,21 @@ describe('orderSlice', () => {
     expect(state.orderRequest).toBe(false);
   });
 
-  it('rejected ставит orderFailed = true', () => {
+  it('rejected: orderFailed = true', () => {
     const s = reducer(undefined, createOrder.rejected(new Error(), '', []));
     expect(s.orderFailed).toBe(true);
   });
 
   it('clearOrder очищает order', () => {
-    const filled = { order, orderRequest: false, orderFailed: false };
-    const s = reducer(filled as any, clearOrder());
+    const filled: TOrderState = {
+      order,
+      orderRequest: false,
+      orderFailed: false
+    };
+
+    const s = reducer(filled, clearOrder());
     expect(s.order).toBe(null);
-    expect(s.orderFailed).toBe(false);
     expect(s.orderRequest).toBe(false);
+    expect(s.orderFailed).toBe(false);
   });
 });

@@ -17,7 +17,7 @@ import profileOrdersReducer, * as profileOrdersActions from './slices/profileOrd
 const feedUrl = 'wss://norma.education-services.ru/orders/all';
 const profileOrdersUrl = 'wss://norma.education-services.ru/orders';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   ingredients: ingredientReducer,
   burgerConstructor: constructorReducer,
   order: orderReducer,

@@ -12,6 +12,8 @@ describe('Stellar Burgers — конструктор', () => {
       'createOrder'
     );
 
+    localStorage.setItem('refreshToken', 'test-refresh-token');
+
     cy.setCookie('accessToken', 'test-access-token');
 
     cy.visit('/');
